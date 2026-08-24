@@ -152,7 +152,18 @@ body::-webkit-scrollbar {
     color: currentColor;
 }
 
-/* ===== 导航 ===== */
+/* ===== 导航｜汉堡菜单新增样式 ===== */
+.header-wrap{display:flex;align-items:center;gap:12px}
+.nav-desktop{display:flex;gap:24px}
+.hamburger-btn{display:none;background:transparent;border:none;padding:4px;cursor:pointer}
+.hamburger-btn span{display:block;width:24px;height:3px;background:var(--text);border-radius:2px;margin:4px 0;transition:0.24s}
+.mobile-sidebar{position:fixed;top:0;right:-280px;width:280px;height:100vh;background:var(--bg);border-left:1px solid var(--border);z-index:1050;transition:right 0.28s ease;padding:64px 24px}
+.mobile-sidebar.open{right:0}
+.sidebar-mask{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1040;opacity:0;visibility:hidden;transition:0.28s}
+.sidebar-mask.open{opacity:1;visibility:visible}
+.mobile-nav-item{display:block;padding:12px 0;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s}
+.mobile-nav-item:hover{color:var(--orange-hover)}
+
 .nav {
     display: flex;
     flex-wrap: nowrap;
@@ -617,7 +628,11 @@ footer {
     color: var(--orange);
 }
 
-/* ===== 响应式 ===== */
+/* ===== 响应式｜汉堡生效断点768px ===== */
+@media(max-width:768px){
+  .nav-desktop{display:none}
+  .hamburger-btn{display:block}
+}
 @media (max-width: 640px) {
     .container {
         padding: 15px 12px;
@@ -712,4 +727,4 @@ footer {
     .site-info h1 {
         font-size: 1.25rem;
     }
-  }
+}
