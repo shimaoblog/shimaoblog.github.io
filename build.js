@@ -145,12 +145,51 @@ for (const t of talkList) {
 }
 
 // ============================================
-// 渲染导航
+// 渲染导航【汉堡侧边栏版本】
 // ============================================
-let navHtml = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
+let desktopNavLinks = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
+let mobileSideLinks = `<a class="mobile-nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
+
 for (const p of pageList) {
-  navHtml += `<a class="nav-item" href="${base}${p.slug}/">${p.title}</a>`;
+  desktopNavLinks += `<a class="nav-item" href="${base}${p.slug}/">${p.title}</a>`;
+  mobileSideLinks += `<a class="mobile-nav-item" href="${base}${p.slug}/">${p.title}</a>`;
 }
+
+let navHtml = `
+<div class="header-wrap">
+  <div class="nav-desktop">
+    ${desktopNavLinks}
+  </div>
+  <button class="hamburger-btn" id="hamburgerBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+
+<div class="mobile-sidebar" id="mobileSide">
+  <div class="mobile-sidebar-inner">
+    ${mobileSideLinks}
+  </div>
+</div>
+<div class="sidebar-mask" id="sideMask"></div>
+
+<script>
+const hamburgerBtn=document.getElementById('hamburgerBtn');
+const mobileSide=document.getElementById('mobileSide');
+const sideMask=document.getElementById('sideMask');
+function closeSide(){
+  mobileSide.classList.remove('open');
+  sideMask.classList.remove('open');
+}
+hamburgerBtn.addEventListener('click',()=>{
+  mobileSide.classList.toggle('open');
+  sideMask.classList.toggle('open');
+});
+sideMask.addEventListener('click',closeSide);
+document.querySelectorAll('.mobile-nav-item').forEach(el=>el.addEventListener('click',closeSide));
+</script>
+`;
 
 // ============================================
 // 渲染首页文章列表
