@@ -5,23 +5,29 @@
 <meta name="author" content="石猫">
 <meta name="keywords" content="石猫博客,石猫,技术,博客,blog,生活,历史,考据">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#1c1410">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no,email=no,address=no">
+
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{post_title || site_title || '石猫博客'}}" />
 <meta name="twitter:description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
-  <link rel="shortcut icon" href="/img/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+
+<link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+<link rel="shortcut icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+
 <link rel="stylesheet" href="https://blog.imshimao.com/CSS/main.css">
 <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/katex.min.css">
 <link rel="stylesheet" href="https://blog.imshimao.com/CSS/lightbox.css">
+
 <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/katex.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/contrib/auto-render.js"></script>
 <script src="https://blog.imshimao.com/JS/lightbox.js" defer></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     renderMathInElement(document.body,{
@@ -32,22 +38,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
 <link rel="alternate" type="application/rss+xml" title="石猫博客 RSS Feed" href="https://blog.imshimao.com/feed.xml">
 <link rel="alternate" type="application/json" title="石猫博客 JSON Feed" href="https://blog.imshimao.com/feed.json">
+
 <meta property="og:title" content="{{post_title || site_title || '石猫博客'}}" />
 <meta property="og:locale" content="zh_CN" />
 <meta property="og:description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
 <meta property="og:url" content="{{pageUrl}}" />
 <meta property="og:site_name" content="石猫博客" />
 <meta property="og:type" content="website" />
+
 <link rel="canonical" href="{{pageUrl}}" />
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "{{post_title || site_title || '石猫博客'}}",
-    "url": "{{pageUrl}}",
-    "description": "{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}",
-    "inLanguage": "zh-CN"
-}
-</script>
