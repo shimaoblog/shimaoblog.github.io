@@ -1,9 +1,11 @@
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index,follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="author" content="石猫">
 <meta name="keywords" content="石猫博客,石猫,技术,博客,blog,生活,历史,考据">
+<meta name="description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="theme-color" content="#1c1410">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,3 +52,5 @@ document.addEventListener("DOMContentLoaded", function() {
 <meta property="og:type" content="website" />
 
 <link rel="canonical" href="{{pageUrl}}" />
+
+<title>{{post_title || site_title}}</title>
