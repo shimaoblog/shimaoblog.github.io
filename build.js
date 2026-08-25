@@ -376,18 +376,7 @@ for (const f of fs.readdirSync(__dirname)) {
     fs.copyFileSync(path.join(__dirname, f), path.join(outputDir, f));
   }
 }
-// 复制img静态资源到输出目录
-function copyDir(src, dest) {
-  if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
-  const items = fs.readdirSync(src);
-  for (const item of items) {
-    const s = path.join(src, item);
-    const d = path.join(dest, item);
-    const stat = fs.statSync(s);
-    if (stat.isDirectory()) copyDir(s, d);
-    else fs.copyFileSync(s, d);
-  }
-}
+
 // 拷贝根目录img文件夹
 const srcImg = path.join(__dirname, 'img');
 const outImg = path.join(outputDir, 'img');
@@ -435,7 +424,7 @@ const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
   <title>${xmlEscape(config.title||"SmBLog")}</title>
   <link>${xmlEscape(channelLink)}</link>
   <description>${xmlEscape(config.description||"")}</description>
-  <language>zh‑CN</language>
+  <language>zh-CN</language>
 ${rssItemXml}
 </channel>
 </rss>
