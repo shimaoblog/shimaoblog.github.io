@@ -1,11 +1,10 @@
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index,follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="author" content="石猫">
 <meta name="keywords" content="石猫博客,石猫,技术,博客,blog,生活,历史,考据">
-<meta name="description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}">
+<meta name="description" content="{{post_desc}}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="theme-color" content="#1c1410">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,8 +12,8 @@
 <meta name="format-detection" content="telephone=no,email=no,address=no">
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{{post_title || site_title || '石猫博客'}}" />
-<meta name="twitter:description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
+<meta name="twitter:title" content="{{post_title}}" />
+<meta name="twitter:description" content="{{post_desc}}" />
 
 <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
@@ -44,13 +43,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <link rel="alternate" type="application/rss+xml" title="石猫博客 RSS Feed" href="https://blog.imshimao.com/feed.xml">
 <link rel="alternate" type="application/json" title="石猫博客 JSON Feed" href="https://blog.imshimao.com/feed.json">
 
-<meta property="og:title" content="{{post_title || site_title || '石猫博客'}}" />
+<meta property="og:title" content="{{post_title}}" />
 <meta property="og:locale" content="zh_CN" />
-<meta property="og:description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
+<meta property="og:description" content="{{post_desc}}" />
 <meta property="og:url" content="{{pageUrl}}" />
 <meta property="og:site_name" content="石猫博客" />
 <meta property="og:type" content="website" />
 
 <link rel="canonical" href="{{pageUrl}}" />
 
-<title>{{post_title || site_title}}</title>
+<title>{{post_title}}</title>
