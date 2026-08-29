@@ -144,8 +144,10 @@ for (const t of talkList) {
 `;
 }
 
-// ============================================
-// 渲染导航
+
+
+  // ============================================
+// 渲染导航（适配你自研SmBLog，实现：顶部显示站名，滚动后自动替换为文章h1标题，样式兼容你线上配色）
 // ============================================
 let desktopNavLinks = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
 
@@ -156,7 +158,7 @@ for (const p of pageList) {
 let navHtml = `
 <!-- 顶部固定导航栏 -->
 <header class="topbar" id="topbar">
-  <!-- 左侧：站点标题 + 滚动后展示文章标题 -->
+  <!-- 左侧：站点标题 + 滚动后展示文章标题占位 -->
   <div class="topbar-left">
     <a href="${base}index.html" class="topbar-brand" id="siteBrand">${siteTitle}</a>
     <span class="topbar-post-title" id="postTitle"></span>
@@ -168,6 +170,36 @@ let navHtml = `
     </div>
   </div>
 </header>
+
+<style>
+.topbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  transition: box-shadow .28s ease;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.topbar-brand {
+  transition: opacity .28s ease;
+  white-space: nowrap;
+}
+.topbar-post-title {
+  position: absolute;
+  left: 0;
+  transition: opacity .28s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+</style>
 
 <!-- 滚动监听JS：滚动后顶栏切换显示文章一级标题 -->
 <script>
