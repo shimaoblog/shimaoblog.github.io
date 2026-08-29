@@ -145,51 +145,72 @@ for (const t of talkList) {
 }
 
 // ============================================
-// 渲染导航【汉堡侧边栏版本】
+// 渲染导航
 // ============================================
 let desktopNavLinks = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
-let mobileSideLinks = `<a class="mobile-nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
 
 for (const p of pageList) {
   desktopNavLinks += `<a class="nav-item" href="${base}${p.slug}/">${p.title}</a>`;
-  mobileSideLinks += `<a class="mobile-nav-item" href="${base}${p.slug}/">${p.title}</a>`;
 }
 
 let navHtml = `
-<div class="header-wrap">
-  <div class="nav-desktop">
-    ${desktopNavLinks}
+<header class="topbar" id="topbar">
+  <div class="topbar-left">
+    <a href="${base}index.html" class="topbar-brand" id="siteBrand">${siteTitle}</a>
+    <span class="topbar-post-title" id="postTitle"></span>
   </div>
-  <button class="hamburger-btn" id="hamburgerBtn">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-</div>
-
-<div class="mobile-sidebar" id="mobileSide">
-  <div class="mobile-sidebar-inner">
-    ${mobileSideLinks}
+  <div class="topbar-center">
+    <div class="nav-desktop">
+      ${desktopNavLinks}
+    </div>
   </div>
-</div>
-<div class="sidebar-mask" id="sideMask"></div>
+</header>
 
 <script>
-const hamburgerBtn=document.getElementById('hamburgerBtn');
-const mobileSide=document.getElementById('mobileSide');
-const sideMask=document.getElementById('sideMask');
-function closeSide(){
-  mobileSide.classList.remove('open');
-  sideMask.classList.remove('open');
+const topbar = document.getElementById('topbar');
+const siteBrand = document.getElementById('siteBrand');
+const postTitleEl = document.getElementById('postTitle');
+const headings = Array.from(document.querySelectorAll('.markdown-body h1'));
+let currentHeadingText = '';
+
+function updateTitle() {
+  const scrollY = window.scrollY;
+  // 滚动阈值，超过就切换标题
+  const threshold = 80;
+  let activeHeading = null;
+
+  for(const h of headings){
+    const rect = h.getBoundingClientRect();
+    if(rect.top <= 120){
+      activeHeading = h;
+    }
+  }
+
+  if(scrollY < threshold){
+    // 在页面顶端：显示站点名，隐藏文章标题
+    siteBrand.style.opacity = '1';
+    postTitleEl.style.opacity = '0';
+    postTitleEl.style.width = '0';
+    currentHeadingText = '';
+  }else{
+    // 滚动下去：隐藏站点名，展示h1标题
+    siteBrand.style.opacity = '0';
+    postTitleEl.style.opacity = '1';
+    postTitleEl.style.width = 'auto';
+    if(activeHeading){
+      const text = activeHeading.innerText.trim();
+      if(currentHeadingText !== text){
+        postTitleEl.innerText = text;
+        currentHeadingText = text;
+      }
+    }
+  }
 }
-hamburgerBtn.addEventListener('click',()=>{
-  mobileSide.classList.toggle('open');
-  sideMask.classList.toggle('open');
-});
-sideMask.addEventListener('click',closeSide);
-document.querySelectorAll('.mobile-nav-item').forEach(el=>el.addEventListener('click',closeSide));
+window.addEventListener('scroll', updateTitle);
+window.addEventListener('load', updateTitle);
 </script>
 `;
+
 
 // ============================================
 // 渲染首页文章列表
