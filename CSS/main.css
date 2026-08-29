@@ -45,7 +45,8 @@
 html {
     scrollbar-width: none;
     -ms-overflow-style: none;
-    font-size: 18px; /* 整体放大字体 */
+    font-size: 18px;
+    scroll-behavior: smooth;
 }
 html::-webkit-scrollbar {
     display: none;
@@ -62,14 +63,69 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
     font-size: 1rem;
+    padding-top: 60px;
 }
 body::-webkit-scrollbar {
     display: none;
 }
 
+/* ===== 滚动切换顶栏 无汉堡 ===== */
+.topbar {
+    width:100%;
+    background:var(--primary);
+    color:#ffffff;
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    position:fixed;
+    top:0;
+    z-index:100;
+    transition: all 0.3s ease;
+    height:60px;
+}
+.topbar-left {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    overflow:hidden;
+}
+.topbar-brand {
+    font-size:1.25rem;
+    font-weight:700;
+    color:#fff;
+    text-decoration:none;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+.topbar-post-title {
+    font-size:1.1rem;
+    font-weight:600;
+    color:#fff;
+    transition: all 0.3s ease;
+    opacity:0;
+    width:0;
+    overflow:hidden;
+    white-space: nowrap;
+}
+.nav-desktop {
+    display:flex;
+    gap:24px;
+    align-items:center;
+}
+.nav-item {
+    color:rgba(255,255,255,0.85);
+    text-decoration:none;
+    transition:0.2s;
+}
+.nav-item:hover {
+    color:#fff;
+}
+
 /* ===== 容器 ===== */
 .container {
-    max-width: 640px; /* 略微放宽以适应大字 */
+    max-width: 640px;
     width: 95%;
     margin: 0 auto;
     padding: 20px 16px;
@@ -109,71 +165,16 @@ body::-webkit-scrollbar {
     display: none !important;
 }
 
-/* ===== 导航 ===== */
+/* ===== 导航（清除旧汉堡相关，仅保留桌面导航） ===== */
 .header-wrap {
     display: flex;
     align-items: center;
     gap: 14px;
 }
-.nav-desktop {
-    display: flex;
-    gap: 28px;
-}
-.hamburger-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    padding: 4px;
-    cursor: pointer;
-}
-.hamburger-btn span {
-    display: block;
-    width: 26px;
-    height: 3px;
-    background: var(--text);
-    border-radius: 2px;
-    margin: 5px 0;
-    transition: 0.24s;
-}
-.mobile-sidebar {
-    position: fixed;
-    top: 0;
-    right: -280px;
-    width: 280px;
-    height: 100vh;
-    background: var(--bg-card);
-    border-left: 1px solid var(--border);
-    z-index: 1050;
-    transition: right 0.28s ease;
-    padding: 70px 24px;
-}
-.mobile-sidebar.open {
-    right: 0;
-}
+.hamburger-btn,
+.mobile-sidebar,
 .sidebar-mask {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1040;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.28s;
-}
-.sidebar-mask.open {
-    opacity: 1;
-    visibility: visible;
-}
-.mobile-nav-item {
-    display: block;
-    padding: 14px 0;
-    color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border);
-    transition: color 0.2s;
-    font-size: 1.1rem;
-}
-.mobile-nav-item:hover {
-    color: var(--primary);
+    display: none !important;
 }
 
 .nav {
@@ -639,13 +640,10 @@ footer {
     color: var(--primary);
 }
 
-/* ===== 响应式（保留断点，适配放大字体） ===== */
+/* ===== 响应式 ===== */
 @media (max-width: 768px) {
     .nav-desktop {
         display: none;
-    }
-    .hamburger-btn {
-        display: block;
     }
 }
 
