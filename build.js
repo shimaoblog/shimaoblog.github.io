@@ -154,11 +154,14 @@ for (const p of pageList) {
 }
 
 let navHtml = `
+<!-- 顶部固定导航栏 -->
 <header class="topbar" id="topbar">
+  <!-- 左侧：站点标题 + 滚动后展示文章标题 -->
   <div class="topbar-left">
     <a href="${base}index.html" class="topbar-brand" id="siteBrand">${siteTitle}</a>
     <span class="topbar-post-title" id="postTitle"></span>
   </div>
+  <!-- 中间桌面导航 -->
   <div class="topbar-center">
     <div class="nav-desktop">
       ${desktopNavLinks}
@@ -166,19 +169,25 @@ let navHtml = `
   </div>
 </header>
 
+<!-- 滚动监听JS：滚动后顶栏切换显示文章一级标题 -->
 <script>
+// 获取DOM元素
 const topbar = document.getElementById('topbar');
 const siteBrand = document.getElementById('siteBrand');
 const postTitleEl = document.getElementById('postTitle');
+// 获取文章内所有一级标题 h1
 const headings = Array.from(document.querySelectorAll('.markdown-body h1'));
+// 记录当前显示的标题，避免频繁更新
 let currentHeadingText = '';
 
+// 滚动更新标题逻辑
 function updateTitle() {
   const scrollY = window.scrollY;
-  // 滚动阈值，超过就切换标题
+  // 滚动阈值，超过该像素才切换标题
   const threshold = 80;
   let activeHeading = null;
 
+  // 遍历标题，找到当前进入可视区域的h1
   for(const h of headings){
     const rect = h.getBoundingClientRect();
     if(rect.top <= 120){
@@ -186,14 +195,15 @@ function updateTitle() {
     }
   }
 
+  // 页面顶部：显示站点名，隐藏文章标题
   if(scrollY < threshold){
-    // 在页面顶端：显示站点名，隐藏文章标题
     siteBrand.style.opacity = '1';
     postTitleEl.style.opacity = '0';
     postTitleEl.style.width = '0';
     currentHeadingText = '';
-  }else{
-    // 滚动下去：隐藏站点名，展示h1标题
+  }
+  // 向下滚动：隐藏站点名，展示当前文章标题
+  else{
     siteBrand.style.opacity = '0';
     postTitleEl.style.opacity = '1';
     postTitleEl.style.width = 'auto';
@@ -206,11 +216,11 @@ function updateTitle() {
     }
   }
 }
+// 绑定滚动、页面加载事件
 window.addEventListener('scroll', updateTitle);
 window.addEventListener('load', updateTitle);
 </script>
 `;
-
 
 // ============================================
 // 渲染首页文章列表
