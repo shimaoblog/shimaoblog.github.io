@@ -146,113 +146,6 @@ for (const t of talkList) {
 
 
 
-  // ============================================
-// 渲染导航（适配你自研SmBLog，实现：顶部显示站名，滚动后自动替换为文章h1标题，样式兼容你线上配色）
-// ============================================
-let desktopNavLinks = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
-
-for (const p of pageList) {
-  desktopNavLinks += `<a class="nav-item" href="${base}${p.slug}/">${p.title}</a>`;
-}
-
-let navHtml = `
-<!-- 顶部固定导航栏 -->
-<header class="topbar" id="topbar">
-  <!-- 左侧：站点标题 + 滚动后展示文章标题占位 -->
-  <div class="topbar-left">
-    <a href="${base}index.html" class="topbar-brand" id="siteBrand">${siteTitle}</a>
-    <span class="topbar-post-title" id="postTitle"></span>
-  </div>
-  <!-- 中间桌面导航 -->
-  <div class="topbar-center">
-    <div class="nav-desktop">
-      ${desktopNavLinks}
-    </div>
-  </div>
-</header>
-
-<style>
-.topbar {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  transition: box-shadow .28s ease;
-}
-.topbar-left {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-.topbar-brand {
-  transition: opacity .28s ease;
-  white-space: nowrap;
-}
-.topbar-post-title {
-  position: absolute;
-  left: 0;
-  transition: opacity .28s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  pointer-events: none;
-}
-</style>
-
-<!-- 滚动监听JS：滚动后顶栏切换显示文章一级标题 -->
-<script>
-// 获取DOM元素
-const topbar = document.getElementById('topbar');
-const siteBrand = document.getElementById('siteBrand');
-const postTitleEl = document.getElementById('postTitle');
-// 获取文章内所有一级标题 h1
-const headings = Array.from(document.querySelectorAll('.markdown-body h1'));
-// 记录当前显示的标题，避免频繁更新
-let currentHeadingText = '';
-
-// 滚动更新标题逻辑
-function updateTitle() {
-  const scrollY = window.scrollY;
-  // 滚动阈值，超过该像素才切换标题
-  const threshold = 80;
-  let activeHeading = null;
-
-  // 遍历标题，找到当前进入可视区域的h1
-  for(const h of headings){
-    const rect = h.getBoundingClientRect();
-    if(rect.top <= 120){
-      activeHeading = h;
-    }
-  }
-
-  // 页面顶部：显示站点名，隐藏文章标题
-  if(scrollY < threshold){
-    siteBrand.style.opacity = '1';
-    postTitleEl.style.opacity = '0';
-    postTitleEl.style.width = '0';
-    currentHeadingText = '';
-  }
-  // 向下滚动：隐藏站点名，展示当前文章标题
-  else{
-    siteBrand.style.opacity = '0';
-    postTitleEl.style.opacity = '1';
-    postTitleEl.style.width = 'auto';
-    if(activeHeading){
-      const text = activeHeading.innerText.trim();
-      if(currentHeadingText !== text){
-        postTitleEl.innerText = text;
-        currentHeadingText = text;
-      }
-    }
-  }
-}
-// 绑定滚动、页面加载事件
-window.addEventListener('scroll', updateTitle);
-window.addEventListener('load', updateTitle);
-</script>
-`;
 
 // ============================================
 // 渲染首页文章列表
@@ -290,6 +183,96 @@ for (const t of talkList.slice(0, 5)) {
       <p class="article-desc">${plainText}</p>
     </div>`;
 }
+// ============================================
+// 渲染导航｜全端汉堡菜单（电脑手机统一折叠按钮，移除滚动切换标题逻辑）
+// ============================================
+let desktopNavLinks = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
+
+for (const p of pageList) {
+  desktopNavLinks += `<a class="nav-item" href="${base}${p.slug}/">${p.title}</a>`;
+}
+
+let navHtml = `
+<header class="topbar" id="topbar">
+  <div class="topbar-left">
+    <a href="${base}index.html" class="topbar-brand">${siteTitle}</a>
+  </div>
+  <button class="hamburger-btn" id="menuBtn">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <nav class="mobile-menu" id="mobileMenu">
+    ${desktopNavLinks}
+  </nav>
+</header>
+
+<style>
+.topbar {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  height: 60px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.topbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  text-decoration: none;
+}
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #24292F;
+}
+.mobile-menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  transform: translateY(-120%);
+  transition: transform 0.3s ease;
+}
+.mobile-menu.open {
+  transform: translateY(0);
+}
+.mobile-menu .nav-item {
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.mobile-menu .nav-item:hover {
+  color: #000;
+  text-decoration: underline;
+}
+body {
+  padding-top: 60px;
+}
+</style>
+
+<script>
+const btn = document.getElementById('menuBtn');
+const menu = document.getElementById('mobileMenu');
+btn.addEventListener('click', ()=>{
+  menu.classList.toggle('open');
+})
+</script>
+`;
+
 
 // ============================================
 // 渲染归档页
